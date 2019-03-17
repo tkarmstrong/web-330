@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>armstrong-exercise-4.3</title>
+
+    <!-- jQuery reference -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  </head>
+  <body>
+
+    <h3>Delete Request</h3>
+
+    <button style="font-size: 20px;" id="deleteIt">Delete it!</button>
+
+    <script>
+      $(function() {
+        $('#deleteIt').on('click', function () {
+          $.ajax({
+            url: "http://httpbin.org/delete",
+            dataType: "json",
+            type: "DELETE",
+            data: {name: "tyler", id: "001", available: true},
+            success: function (data, status) {
+              console.log("Name: " + data.form.name + "\nId : " +
+              data.form.id + "\nAvailable: " + data.form.available + "\nStatus: " + status);
+            }
+          })
+        });
+      });
+    </script>
+  </body>
+</html>
