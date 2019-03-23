@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Armstrong Exercise 5.2 - The Proxy Pattern</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <div class="container mt-5">
+
+        <h2>Proxy Pattern Example</h2>
+
+        <button id="btnExample" type="button" class="btn btn-dark mt-2">Run Test</button>
+
+        <span id="proxyExample" class="text-secondary h3"><br><br>Test results should display here.</span>
+
+    </div>
+
+
+    <!-- jquery, popper, then bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+
+      /*
+      ============================================
+      ; Title:  Exercise 5.2 - The Proxy Pattern
+      ; Author: Professor Krasso
+      ; Modified: 23 March 2019
+      ; Modified By: Tyler Armstrong
+      ; Description: Showcases Proxy Pattern.
+      ;===========================================
+      */
+
+      $(function() {
+
+        var computer = {
+
+          model: "Macbook Pro",
+          os: "Majove",
+          display: function() {
+            $("#proxyExample").removeClass("text-secondary").html("");
+            $("#proxyExample").addClass("text-success").append("<br><br>Model: " + this.model + " " + "<br>OS: " + this.os);
+          }
+        };
+
+        $("#btnExample").click($.proxy(computer, "display"));
+
+      });
+    </script>
+  </body>
+</html>
