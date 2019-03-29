@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Armstrong Exercise 6.2</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <!-- JavaScript Libraries -->
+    <script src="../knockout-v3.5.0.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="form-group">
+
+          <!-- Form below uses the data-bind attribute to bind the values from Knockout's observables -->
+          <label for="firstName">First Name:</label>
+          <input type="text" class="form-control alert-warning" data-bind="value: firstName" id="firstName"/>
+
+          <label for="lastName">Last Name:</label>
+          <input type="text" class="form-control alert-warning" data-bind="value: lastName" id="lastName"/>
+
+          <label for="emailAddress">Email Address:</label>
+          <input type="text" class="form-control alert-warning" data-bind="value: emailAddress" id="emailAddress"/>
+
+      </div>
+    </div>
+
+    <script>
+
+      // Knockout ViewModel with observables
+      let PersonViewModel = function() {
+        this.firstName = ko.observable('Tyler'),
+        this.lastName = ko.observable('Armstrong'),
+        this.emailAddress = ko.observable('fake@email.com')
+      }
+
+      // Subscribes the bindings to the observables above
+      ko.applyBindings( new PersonViewModel() );
+
+    </script>
+  </body>
+</html>
