@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <title>Armstrong Assignment 8.4</title>
+
+    <!-- Stylesheet - Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+      integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+      crossorigin="anonymous"
+    />
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <!-- JavaScript Libraries -->
+    <script src="../knockout-v3.5.0.js"></script>
+  </head>
+  <body>
+
+    <!-- Main Container -->
+    <div role="main" class="container">
+      <br /><br />
+      <h2>CRUD Example</h2>
+      <br />
+
+      <!-- If Error -->
+      <div class="row" data-bind="if: error">
+        <div class="col-sm-12">
+          <div class="alert alert-danger" role="alert">
+            <strong>Warning!</strong> <span data-bind="text: error()"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="row">
+        <div class="col-sm-6">
+
+          <!-- Card -->
+          <div class="card card-inverse" style="background-color: #333; border-color:
+              #333; color: white;">
+            <div class="card-block p-3">
+
+              <!-- Card Title -->
+              <h3 class="card-title">Add Employee</h3>
+              <div class="card-text">
+                <div class="form-group row">
+
+                  <!-- Input Employee Name -->
+                  <label for="txtName" class="col-2 col-form-label">Name: </label>
+                  <div class="col-6">
+                    <input
+                      type="text"
+                      data-bind="value: nameToAdd, valueUpdate: 'afterkeydown'"
+                      class="form-control"
+                      id="txtName"
+                    />
+                  </div>
+
+                  <!-- Add Employee Button -->
+                  <div class="col-4">
+                    <a href="#" data-bind="click: add" class="btn btn-primary">Add</a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Form -->
+      <br /><br />
+
+      <!-- Employee List -->
+      <div class="row">
+        <div class="col-sm-8">
+
+          <!-- Card -->
+          <div class="card card-inverse" style="background-color: #333; border-color:
+                    #333; color: white;">
+            <div class="card-block p-3">
+
+              <!-- Car Title -->
+              <h3 class="card-title">Employee List</h3>
+              <div class="card-text">
+
+                <!-- Card Table (List of Employees) -->
+                <table class="table table-dark table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>EmployeeId</th>
+                      <th>Name</th>
+                      <th>Functions</th>
+                    </tr>
+                  </thead>
+                  <tbody data-bind="foreach: Employees">
+                    <tr>
+                      <td data-bind="text: Id"></td>
+                      <td data-bind="text: Name"></td>
+                      <td>
+                        <span>
+                          <a href="#" class="btn btn-success" data-bind="click: $root.edit">
+                            <i class="fa fa-pencil fa-lg"> </i> EDIT
+                          </a>
+                        </span> |
+                        <span>
+                          <a href="#" class="btn btn-danger" data-bind="click: $root.remove">
+                            <i class="fa fa-trash-o fa-lg"> </i> DELETE
+                          </a>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End Card (List of Employees) -->
+
+        <!-- Edit Employee Form (Only show if Employee is assigned) -->
+        <div class="col-sm-4" data-bind="if: Employee">
+          <div class="card card-inverse" style="background-color: #333; border-color:
+                    #333; color: white;">
+            <div class="card-block p-3">
+              <h3 class="card-title">Employee List Item</h3>
+              <div class="card-text">
+                <div class="form-group">
+                  <label for="txtName">Name: </label>
+                  <input type="text" id="txtName" data-bind="value: Employee().Name" class="form-control" />
+                </div>
+                <div class="form-group float-right">
+                  <button data-bind="click: $root.cancel" class="btn btn-group btn-danger">Cancel</button>
+                  <button data-bind="click: $root.update" class="btn btn-group btn-success">Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Edit Employee Form -->
+      <br />
+
+    <script>
+
+      // Employee constructor
+      function EmployeeX(id, name) {
+        this.Id = id;
+        this.Name = name;
+      }
+
+      // Employee Array
+      var employeeList = [
+        new EmployeeX(1, "Tyler"),
+        new EmployeeX(2, "Riley"),
+        new EmployeeX(3, "Joyce"),
+        new EmployeeX(4, "Kent"),
+        new EmployeeX(5, "Nash")
+      ];
+
+      function EmployeeListViewModel() {
+
+        // Variables
+        var self = this;
+
+        // Observables
+        self.error = ko.observable("");
+        self.Id = ko.observable("");
+        self.Name = ko.observable("");
+        self.nameToAdd = ko.observable("");
+        self.Employee = ko.observable();
+
+        // Observable Array
+        self.Employees = ko.observableArray(employeeList);
+
+        // Assign Employee
+        var Employee = {
+          Id: self.Id,
+          Name: self.Name
+        };
+
+        // FIXME:
+        // Add Employee object to employeeList array
+        self.add = function () {
+
+          const name = self.nameToAdd();
+
+          ;
+
+          if ((self.nameToAdd() !== "") && (self.checkName(self.Employees(), name) !== true)) {
+            self.error("");
+            const id = employeeList.length +1;
+            const name = this.nameToAdd();
+            const newEmployee = new EmployeeX(id, name);
+            self.Employees.push(newEmployee);
+          }
+          else {
+            self.error("Duplicate or Invalid Entry.");
+          }
+          self.nameToAdd("");
+        }
+
+        // Pass Employee object on edit to open window
+        self.edit = function (Employee) {
+          self.Employee(Employee);
+        };
+
+        // Pass Employee object & remove it from array
+        self.remove = function (Employee) {
+          self.Employees.remove(Employee);
+        };
+
+        // Remove Employee object values to set to false
+        self.cancel = function () {
+          self.Employee(null);
+        };
+
+        // Remove Employee then add updated Employee object to Employees
+        self.update = function () {
+            var l_employee = self.Employee();
+            self.Employees.remove(self.Employee());
+            self.Employees.push(l_employee);
+            self.sort();
+          }
+
+        // Sort Employees
+        self.sort = function() {
+          self.Employees.sort(function(a, b){return a.Id - b.Id});
+        }
+
+        // Check if name exists
+        self.checkName = function(array, name) {
+          for (let index = 0; index < array.length; index++) {
+            const Emp = array[index];
+            // FIXME:
+            for (const key in Emp) {
+              if (Emp.hasOwnProperty(key)) {
+                const property = Emp[key];
+                if (property === name) {
+                  return true;
+                }
+              }
+            }
+          }
+          return false;
+        }
+      }
+
+      ko.applyBindings(new EmployeeListViewModel());
+
+    </script>
+  </body>
+</html>
