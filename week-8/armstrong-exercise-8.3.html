@@ -31,6 +31,7 @@
 
     <div role="main" class="container">
       <br /><br />
+      <!-- Error -->
       <div class="row" data-bind="if: error">
         <div class="col-sm-12">
           <div class="alert alert-danger" role="alert">
@@ -39,14 +40,20 @@
         </div>
       </div>
       <br />
+
+      <!-- List Title -->
       <h2>UD Example</h2>
+
+      <!-- Card -->
       <div class="row">
         <div class="col-sm-8">
           <div class="card card-inverse" style="background-color: #333; border-color:
               #333; color: white;">
             <div class="card-block p-3">
+              <!-- Card Title -->
               <h3 class="card-title">Employee List</h3>
               <div class="card-text">
+                <!-- Cart Table -->
                 <table class="table table-dark table-striped table-hover">
                   <thead>
                     <tr>
@@ -55,6 +62,7 @@
                       <th>Functions</th>
                     </tr>
                   </thead>
+                  <!-- KO foreach binding -->
                   <tbody data-bind="foreach: Employees">
                     <tr>
                       <td data-bind="text: Id"></td>
@@ -74,10 +82,13 @@
                     </tr>
                   </tbody>
                 </table>
+                <!-- End Table -->
               </div>
             </div>
           </div>
         </div>
+
+        <!-- If Employee is assigned, then show form -->
         <div class="col-sm-4" data-bind="if: Employee">
           <div class="card card-inverse" style="background-color: #333; border-color:
               #333; color: white;">
@@ -96,9 +107,11 @@
             </div>
           </div>
         </div>
+        <!-- End Form -->
       </div>
       <br />
     </div>
+    <!-- End Card -->
 
     <script>
 
@@ -117,6 +130,7 @@
         new Employee(5, "Nash")
       ];
 
+      // ViewModel
       function EmployeeViewModel() {
 
         // Variables
@@ -137,7 +151,7 @@
         self.Employee = ko.observable();
         self.Employees = ko.observableArray(employeeList);
 
-        // Pass Employee object on edit
+        // Pass Employee object on edit (Opens form)
         self.edit = function (Employee) {
           self.Employee(Employee);
         };
@@ -147,7 +161,7 @@
           self.Employees.remove(Employee);
         };
 
-        // Remove Employee object values
+        // Remove Employee object values (Closes Form)
         self.cancel = function () {
           self.Employee(null);
         };
@@ -161,6 +175,7 @@
           self.cancel();
         }
 
+        // Sort employeeList
         self.sort = function() {
           self.Employees.sort(function(a, b){return a.Id - b.Id});
         }
